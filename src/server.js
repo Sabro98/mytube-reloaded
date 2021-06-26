@@ -10,7 +10,7 @@ const app = express();
 const logger = morgan("dev");
 
 app.set("view engine", "pug");
-app.set("views", "./src/views");
+app.set("views", `${process.cwd()}/src/views`);
 app.use(logger);
 
 app.use("/", globalRouter);
