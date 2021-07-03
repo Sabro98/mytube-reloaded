@@ -52,3 +52,23 @@ export const watch = (req, res) => {
     video, // equal with video: video
   });
 };
+
+export const getUpload = (req, res) => {
+  return res.render("upload", { pageTitle: "Upload Video" });
+};
+
+export const postUpload = (req, res) => {
+  // here we will add a video to the videos array;
+  const { title } = req.body;
+  const newVideo = {
+    title,
+    rating: 0,
+    comments: 0,
+    createAt: "just now",
+    views: 0,
+    id: videos.length,
+  };
+
+  videos.push(newVideo);
+  return res.redirect("/");
+};
