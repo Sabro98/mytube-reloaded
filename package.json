@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "The best way to practice development skill",
   "scripts": {
-    "dev": "nodemon --exec babel-node --delay 2 ./src/server.js"
+    "dev": "nodemon --exec babel-node --delay 2 ./src/init.js"
   },
   "repository": {
     "type": "git",
