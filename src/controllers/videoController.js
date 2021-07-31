@@ -76,17 +76,15 @@ export const remove = async (req, res) => {
   return res.redirect("/");
 };
 
-export const getSearch = (req, res) => {
-  return res.render("search");
-};
-
-export const postSearch = async (req, res) => {
-  const { title } = req.body;
-  if (!title) {
-    return res.render("404", { pageTitle: "404 NOT FOUND" });
+export const search = async (req, res) => {
+  const { title } = req.query;
+  let videos = [];
+  if (title) {
+    videos = await Video.find({
+      title: {
+        $regex: new RegExp(`${title}$`, "i"),
+      },
+    });
   }
-  const video = await Video.findOne({ title });
-  const id = video._id;
-
-  return res.redirect(`videos/${id}`);
+  return res.render("search", { pageTitle: "Search Video", videos });
 };
