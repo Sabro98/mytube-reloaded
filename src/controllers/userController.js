@@ -65,6 +65,7 @@ export const postLogin = async (req, res) => {
       errorMessage: "Wrong assword",
     });
   }
+
   req.session.loggedIn = true;
   req.session.user = user;
 
