@@ -136,6 +136,7 @@ export const finishKakaoLogin = async (req, res) => {
       email,
       avartarUrl: userData.kakao_account.profile.profile_image_url,
       socialOnly: true,
+      socialWith: "Kakao",
       username: userData.kakao_account.profile.nickname,
       name: userData.kakao_account.profile.nickname,
     });
@@ -208,6 +209,7 @@ export const finishGithubLogin = async (req, res) => {
         username: userData.login,
         email: emailObj.email,
         socialOnly: true,
+        socialWith: "Github",
         location: userData.location,
         avartarUrl: userData.avatar_url,
       });
@@ -223,4 +225,16 @@ export const finishGithubLogin = async (req, res) => {
 export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
+};
+
+export const getEdit = (req, res) => {
+  return res.render("editProfile", { pageTitle: "Edit Profile" });
+};
+
+export const postEdit = (req, res) => {
+  return res.send("Post Edit");
+};
+
+export const see = (req, res) => {
+  return res.send("See user");
 };

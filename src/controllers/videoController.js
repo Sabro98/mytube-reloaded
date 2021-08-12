@@ -13,7 +13,10 @@ export const getEdit = async (req, res) => {
     return res.status(404).render("404", { pageTitle: "404 NOT FOUND" });
   }
 
-  return res.render("edit", { pageTitle: `Editing: ${video.title}`, video });
+  return res.render("editVideo", {
+    pageTitle: `Editing: ${video.title}`,
+    video,
+  });
 };
 
 export const postEdit = async (req, res) => {
