@@ -1,9 +1,19 @@
 extends base
 
-block content 
-    form(method="POST")
-        input(name="name", placeholder="Name", value=user.name, type=text)
-        input(name="email", placeholder="Email", value=user.email, type=email)
-        input(name="UserName", placeholder="UserName", value=user.username, type=text)
-        input(name="location", placeholder="Location", value=user.location, type=text)
-        input(value="Update Profile", type="submit")
+block content
+  form(method="POST")
+    input(name="name", placeholder="Name", value=user.name, type=text)
+    input(name="email", placeholder="Email", value=user.email, type=email)
+    input(
+      name="UserName",
+      placeholder="UserName",
+      value=user.username,
+      type=text
+    )
+    input(
+      name="location",
+      placeholder="Location",
+      value=user.location,
+      type=text
+    )
+    input(value="Update Profile", type="submit") 
