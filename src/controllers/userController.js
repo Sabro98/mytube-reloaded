@@ -81,6 +81,70 @@ export const postLogin = async (req, res) => {
   res.redirect("/");
 };
 
+export const startKakaoLogin = (req, res) => {
+  const baseUrl = "https://kauth.kakao.com/oauth/authorize";
+  const config = {
+    client_id: process.env.KAKAO_CLIENT_ID,
+    redirect_uri: process.env.KAKAO_REDIRECT_URL,
+    response_type: "code",
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUrl = `${baseUrl}?${params}`;
+
+  return res.redirect(finalUrl);
+};
+
+export const finishKakaoLogin = async (req, res) => {
+  const baseUrl = "https://kauth.kakao.com/oauth/token";
+  const config = {
+    grant_type: "authorization_code",
+    client_id: process.env.KAKAO_CLIENT_ID,
+    redirect_uri: process.env.KAKAO_REDIRECT_URL,
+    code: req.query.code,
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUrl = `${baseUrl}?${params}`;
+
+  const requestToken = await (
+    await fetch(finalUrl, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    })
+  ).json();
+
+  if (!("access_token" in requestToken)) return res.redirect("/login");
+
+  const { access_token } = requestToken;
+  const apiUrl = "https://kapi.kakao.com/v2/user/me";
+  const userData = await (
+    await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    })
+  ).json();
+
+  const email = userData.kakao_account.email;
+  if (!email) return res.redirect("/login");
+  const user = await User.findOne({ email });
+  if (!user) {
+    await User.create({
+      email,
+      avartarUrl: userData.kakao_account.profile.profile_image_url,
+      socialOnly: true,
+      username: userData.kakao_account.profile.nickname,
+      name: userData.kakao_account.profile.nickname,
+    });
+  }
+  req.session.loggedIn = true;
+  req.session.user = user;
+  return res.redirect("/");
+};
+
 export const startGithubLogin = (req, res) => {
   const baseUrl = "https://github.com/login/oauth/authorize";
   const config = {
