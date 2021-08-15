@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import fetch from "node-fetch";
 
 export const getJoin = (req, res) => {
-  return res.render("join", { pageTitle: "Join" });
+  return res.render("users/join", { pageTitle: "Join" });
 };
 
 export const postJoin = async (req, res) => {
@@ -11,14 +11,14 @@ export const postJoin = async (req, res) => {
   const pageTitle = "Join";
 
   if (!password) {
-    return res.status(400).render("join", {
+    return res.status(400).render("users/join", {
       pageTitle,
       errorMessage: "Password required",
     });
   }
 
   if (password !== password2) {
-    return res.status(400).render("join", {
+    return res.status(400).render("users/join", {
       pageTitle,
       errorMessage: "Password not match.",
     });
@@ -26,7 +26,7 @@ export const postJoin = async (req, res) => {
 
   const userExists = await User.exists({ $or: [{ username }, { email }] });
   if (userExists) {
-    return res.status(400).render("join", {
+    return res.status(400).render("users/join", {
       pageTitle,
       errorMessage: "User already Exist",
     });
@@ -43,7 +43,7 @@ export const postJoin = async (req, res) => {
 
     return res.redirect("/login");
   } catch (error) {
-    return res.status(400).render("join", {
+    return res.status(400).render("users/join", {
       pageTitle,
       errorMessage: error._message,
     });
@@ -51,7 +51,7 @@ export const postJoin = async (req, res) => {
 };
 
 export const getLogin = (req, res) =>
-  res.render("login", { pageTitle: "Login" });
+  res.render("users/login", { pageTitle: "Login" });
 
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
@@ -60,7 +60,7 @@ export const postLogin = async (req, res) => {
   //check if account exists
   const user = await User.findOne({ username, socialOnly: false });
   if (!user) {
-    return res.status(400).render("login", {
+    return res.status(400).render("users/login", {
       pageTitle,
       errorMessage: "Account does not exists",
     });
@@ -69,7 +69,7 @@ export const postLogin = async (req, res) => {
   //check if password correct
   const matched = await bcrypt.compare(password, user.password);
   if (!matched) {
-    return res.status(400).render("login", {
+    return res.status(400).render("users/login", {
       pageTitle,
       errorMessage: "Wrong assword",
     });
@@ -228,7 +228,7 @@ export const logout = (req, res) => {
 };
 
 export const getEdit = (req, res) => {
-  return res.render("editProfile", { pageTitle: "Edit Profile" });
+  return res.render("users/editProfile", { pageTitle: "Edit Profile" });
 };
 
 export const postEdit = async (req, res) => {
@@ -246,7 +246,7 @@ export const postEdit = async (req, res) => {
   });
 
   if (userExists) {
-    return res.status(400).render("editProfile", {
+    return res.status(400).render("users/editProfile", {
       pageTitle,
       errorMessage: "User already Exist",
     });

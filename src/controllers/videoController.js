@@ -13,7 +13,7 @@ export const getEdit = async (req, res) => {
     return res.status(404).render("404", { pageTitle: "404 NOT FOUND" });
   }
 
-  return res.render("editVideo", {
+  return res.render("videos/editVideo", {
     pageTitle: `Editing: ${video.title}`,
     video,
   });
@@ -45,14 +45,14 @@ export const watch = async (req, res) => {
     return res.status(404).render("404", { pageTitle: "404 NOT FOUND" });
   }
 
-  return res.render("watch", {
+  return res.render("videos/watch", {
     pageTitle: `Watching: ${video.title}`,
     video,
   });
 };
 
 export const getUpload = (req, res) => {
-  return res.render("upload", { pageTitle: "Upload Video" });
+  return res.render("videos/upload", { pageTitle: "Upload Video" });
 };
 
 export const postUpload = async (req, res) => {
@@ -66,7 +66,7 @@ export const postUpload = async (req, res) => {
     });
     return res.redirect("/");
   } catch (error) {
-    return res.status(400).render("upload", {
+    return res.status(400).render("videos/upload", {
       pageTitle: "Upload Video",
       errorMessage: error._message,
     });
@@ -89,5 +89,5 @@ export const search = async (req, res) => {
       },
     });
   }
-  return res.render("search", { pageTitle: "Search Video", videos });
+  return res.render("videos/search", { pageTitle: "Search Video", videos });
 };
