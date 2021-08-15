@@ -231,8 +231,41 @@ export const getEdit = (req, res) => {
   return res.render("editProfile", { pageTitle: "Edit Profile" });
 };
 
-export const postEdit = (req, res) => {
-  return res.send("Post Edit");
+export const postEdit = async (req, res) => {
+  const pageTitle = "Edit Profile";
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { name, email, username, location },
+  } = req;
+
+  const userExists = await User.exists({
+    _id: { $ne: _id },
+    $or: [{ username }, { email }],
+  });
+
+  if (userExists) {
+    return res.status(400).render("editProfile", {
+      pageTitle,
+      errorMessage: "User already Exist",
+    });
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      name,
+      email,
+      username,
+      location,
+    },
+    { new: true }
+  );
+
+  req.session.user = updatedUser;
+
+  return res.redirect("/");
 };
 
 export const see = (req, res) => {
