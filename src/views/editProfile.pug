@@ -22,3 +22,6 @@ block content
       type=text
     )
     input(value="Update Profile", type="submit") 
+    if !user.socialOnly
+      hr
+      a(href="change-password") Change Password &rarr;
