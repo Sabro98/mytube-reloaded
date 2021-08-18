@@ -1,6 +1,5 @@
 import express from "express";
 import {
-  edit,
   logout,
   startGithubLogin,
   finishGithubLogin,
@@ -8,9 +7,9 @@ import {
   finishKakaoLogin,
   getEdit,
   postEdit,
-  see,
   getChangePassword,
   postChangePassword,
+  see,
 } from "../controllers/userController";
 
 import {
@@ -20,6 +19,8 @@ import {
 } from "../middlewares";
 
 const userRouter = express.Router();
+
+userRouter.get("/:id([0-9a-f]{24})", see);
 
 userRouter
   .route("/edit")
@@ -39,7 +40,5 @@ userRouter.get("/github/start", publicOnlyMiddleware, startGithubLogin);
 userRouter.get("/github/finish", publicOnlyMiddleware, finishGithubLogin);
 userRouter.get("/kakao/start", publicOnlyMiddleware, startKakaoLogin);
 userRouter.get("/kakao/finish", publicOnlyMiddleware, finishKakaoLogin);
-
-userRouter.get("/see", see);
 
 export default userRouter;
