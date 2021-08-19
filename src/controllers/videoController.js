@@ -1,3 +1,4 @@
+import User from "../models/User";
 import Video from "../models/Video";
 
 export const home = async (req, res) => {
@@ -39,7 +40,7 @@ export const postEdit = async (req, res) => {
 
 export const watch = async (req, res) => {
   const { id } = req.params; //equal with const id = req.params.id;
-  const video = await Video.findById(id);
+  const video = await Video.findById(id).populate("owner");
 
   if (!video) {
     return res.status(404).render("404", { pageTitle: "404 NOT FOUND" });
@@ -59,6 +60,7 @@ export const postUpload = async (req, res) => {
   const {
     body: { title, description, hashtags },
     file: { path: fileUrl },
+    session: { user: _id },
   } = req;
 
   try {
@@ -67,6 +69,7 @@ export const postUpload = async (req, res) => {
       description,
       hashtags: Video.formatHashtags(hashtags),
       fileUrl,
+      owner: _id,
     });
     return res.redirect("/");
   } catch (error) {

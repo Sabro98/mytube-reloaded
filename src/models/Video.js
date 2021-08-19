@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const videoSchema = new mongoose.Schema({
   title: { type: String, required: true, trim: true, maxLength: 80 },
+  owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
   fileUrl: { type: String, required: true },
   description: { type: String, required: true, trim: true },
   hashtags: [{ type: String, trim: true }],
