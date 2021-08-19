@@ -72,7 +72,7 @@ export const postLogin = async (req, res) => {
   if (!matched) {
     return res.status(400).render("users/login", {
       pageTitle,
-      errorMessage: "Wrong assword",
+      errorMessage: "Wrong password",
     });
   }
 
@@ -131,9 +131,9 @@ export const finishKakaoLogin = async (req, res) => {
 
   const email = userData.kakao_account.email;
   if (!email) return res.redirect("/login");
-  const user = await User.findOne({ email });
+  let user = await User.findOne({ email });
   if (!user) {
-    await User.create({
+    user = await User.create({
       email,
       avartarUrl: userData.kakao_account.profile.profile_image_url,
       socialOnly: true,
@@ -309,15 +309,12 @@ export const postChangePassword = async (req, res) => {
 
 export const see = async (req, res) => {
   const { id } = req.params;
-  const user = await User.findById(id);
+  const user = await User.findById(id).populate("videos");
   if (!user) {
     return res.status(404).render("404", { pageTitle: "404 NOT FOUND" });
   }
-  const videos = await Video.find({ owner: user._id });
-  console.log(videos);
   return res.render("users/profile", {
     pageTitle: `${user.name}`,
     user,
-    videos
   });
 };
