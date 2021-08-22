@@ -107,7 +107,7 @@ export const remove = async (req, res) => {
   const {
     params: { id: videoID },
     session: {
-      user: { id: loginID },
+      user: { _id: loginID },
     },
   } = req;
 
@@ -121,7 +121,13 @@ export const remove = async (req, res) => {
     return res.status(403).redirect("/");
   }
 
-  await Video.findByIdAndDelete();
+  const user = await User.findById(loginID);
+  user.videos = user.videos.filter(
+    (video) => String(video) !== String(videoID)
+  );
+  await user.save();
+
+  await Video.findByIdAndDelete(videoID);
   return res.redirect("/");
 };
 
