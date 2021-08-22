@@ -29,5 +29,6 @@ app.use("/", rootRounter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
 app.use("/uploads", express.static("uploads"));
+app.use("/static", express.static("assets"));
 
 export default app;
