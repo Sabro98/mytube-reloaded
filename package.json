@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "The best way to practice development skill",
   "scripts": {
-    "dev": "nodemon --exec babel-node --delay 2 ./src/init.js"
+    "dev": "nodemon --exec babel-node --delay 2 ./src/init.js",
+    "assets": "webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,9 @@
     "@babel/core": "^7.14.6",
     "@babel/node": "^7.14.7",
     "@babel/preset-env": "^7.14.7",
-    "nodemon": "^2.0.7"
+    "babel-loader": "^8.2.2",
+    "nodemon": "^2.0.7",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0"
   }
 }
