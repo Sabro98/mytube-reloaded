@@ -13,7 +13,7 @@ header {
   }
 
   .mytube-logo {
-    font-size: 25px;
+    font-size: $logo-font-size;
     i {
       color: $red;
       padding-right: 2px;
