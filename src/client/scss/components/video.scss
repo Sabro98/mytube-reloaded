@@ -4,6 +4,8 @@
   align-items: flex-start;
   padding: 15px;
   font-size: $video-mixin-font-size;
+  width: $video-mixin-width;
+  height: $video-mixin-height;
 
   .video-mixin-title {
     padding-bottom: 10px;

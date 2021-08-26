@@ -3,4 +3,4 @@ mixin video(video)
     h4.video-mixin-title
       a(href=`/videos/${video.id}`) #{ video.title }
     small= video.owner.username
-    small= video.createdAt
+    small 조회수 #{ video.meta.views }
