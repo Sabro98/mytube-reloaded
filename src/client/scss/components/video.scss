@@ -1,0 +1,15 @@
+.video-mixin {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 15px;
+  font-size: $video-mixin-font-size;
+
+  .video-mixin-title {
+    padding-bottom: 10px;
+  }
+
+  small {
+    opacity: 0.5;
+  }
+}
