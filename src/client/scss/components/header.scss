@@ -1,0 +1,22 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+
+  nav {
+    ul {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0px 10px;
+    }
+  }
+
+  .mytube-logo {
+    font-size: 25px;
+    i {
+      color: $red;
+      padding-right: 2px;
+    }
+  }
+}

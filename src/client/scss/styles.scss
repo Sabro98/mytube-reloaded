@@ -16,9 +16,5 @@ body {
   a {
     color: inherit;
     text-decoration: none;
-    transition: color ease-in-out 1s;
-    &:hover {
-      color: black;
-    }
   }
 }
