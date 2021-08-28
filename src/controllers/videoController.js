@@ -1,3 +1,4 @@
+import { isHeroku } from "../middlewares";
 import User from "../models/User";
 import Video from "../models/Video";
 
@@ -81,11 +82,13 @@ export const getUpload = (req, res) => {
 export const postUpload = async (req, res) => {
   const {
     body: { title, description, hashtags },
-    file: { location: fileUrl },
+    file,
     session: {
       user: { _id },
     },
   } = req;
+
+  const fileUrl = isHeroku ? file.location : file.path;
 
   try {
     const newVideo = await Video.create({
